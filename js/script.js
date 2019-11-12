@@ -23,43 +23,30 @@ const showPage = (list, page) => { //function to show the page we want
   }
 };
 
-showPage(studentList, 2) //call the function
+showPage(studentList, 6) //call the function
 
 // add pagination links
 
 const addPaginationLinks = (list) => {
   let numberOfButtons = Math.ceil(list.length / itemsPerPage);
   let htmlDiv = document.getElementsByClassName('page')[0]; //get the div with the class of .page to add buttons to the bottom
+  let newDiv = document.createElement('DIV');
+  let newUl = document.createElement('UL');
+  newDiv.classList.add("pagination")
+  htmlDiv.appendChild(newDiv)
+  newDiv.appendChild(newUl)
 
   for (i = 0; i < numberOfButtons; i++) {
-    let button = document.createElement('BUTTON');
-    htmlDiv.appendChild(button)
-    button.innerText = `${i+1}` //add numbers to buttons
+    let li = document.createElement('LI');
+    let link = document.createElement('A');
+    link.setAttribute("href", "#");
+    link.classList.add("active")
+    li.appendChild(link)
+    newUl.appendChild(li)
+    link.innerText = `${i+1}` //add numbers to buttons
   }
+
 
 };
 
-addPaginationLinks(studentList)
-
-
-/*<!-- pagination HTML to create dynamically -->
-<div class="pagination">
-  <ul>
-    <li>
-      <a class="active" href="#">1</a>
-    </li>
-     <li>
-      <a href="#">2</a>
-    </li>
-     <li>
-      <a href="#">3</a>
-    </li>
-     <li>
-      <a href="#">4</a>
-    </li>
-     <li>
-      <a href="#">5</a>
-    </li>
-  </ul>
-</div>
-<!-- end pagination -->*/
+addPaginationLinks(studentList) //call the function
