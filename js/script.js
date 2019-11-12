@@ -21,6 +21,7 @@ let studentList = document.querySelectorAll('li'); //each studen is an li in the
 
 let itemsPerPage = 10;
 
+
 /***
    Create the `showPage` function to hide all of the items in the
    list except for the ten you want to show.
@@ -36,28 +37,63 @@ let itemsPerPage = 10;
        "invoke" the function
 ***/
 
-let startIndex = 0;
-let endIndex = 0;
+
+
+
 
 const paginate = (list, itemsPerPage) => {
-  let pages = Math.ceil(list.length / itemsPerPage); //we need to round it up to create a new page even if just for a few items
-  for (i = 0; i < pages; i++) {
-  if (i == (pages - 1)){ //if it is the last page just show the remaining items
+
+  let pageButtons = []; //create a variable to store the buttons for each page
+
+
+
+  const createPageButtons = () => { //function to create buttons for every page and add event listeners to each
+    let button = document.createElement("BUTTON");
+    button.addEventListener("click", function(){
+      console.log("start index is " + startIndex)
+    });
+    pageButtons.push(button); //add a button for each page
+  };
+
+
+  let pages = Math.ceil(list.length / itemsPerPage); //we need to round it up to create a new page even if just for a few items on the last one
+  let startIndex = 0;
+  let endIndex = 0;
+
+  for (i = 0; i < pages; i++) { //for every page
+  if (i == (pages - 1)){ //if it is the last page just show the remaining items and not amount of itemsPerPage
       endIndex += itemsPerPage - (endIndex - list.length + itemsPerPage)
     } else {
-      if ( i == 0){ //if it's the first page the startind index is 0 and the endIndex is itemsPerPage - 1
+      if ( i == 0){ //if it's the first page the starting index is 0 and the endIndex is (itemsPerPage - 1)
         startIndex = 0;
         endIndex -= 1
       } else {
-        startIndex = endIndex + 1;
+        startIndex = endIndex + 1; //otherwise the endIndex is always startIndex + 1
       }
-      endIndex += itemsPerPage;
+      endIndex += itemsPerPage; //we always add the amount of items we want displayed per page to the endIndex
+      createPageButtons();
+
+      for (i = 0; i < list.length; i++) {
+        if (i < startIndex || i > endIndex) {
+          list[i].style.display = "none";
+
+        }
+      }
+
     }
-    console.log("the starting index is " + startIndex + " and the ending index is " + endIndex )
   }
+  let divText = document.getElementsByClassName('page')[0]; //get the div with the class of .page to add buttons to the bottom
+
+  for (i = 0; i < pageButtons.length; i++) { //add each button created previously
+    divText.appendChild(pageButtons[i])
+    pageButtons[i].innerText = `${i+1}` //add numbers to buttons
+  }
+  console.log("start index is " + startIndex)
+  console.log("end index is " + endIndex)
+
 };
 
-paginate(studentList, itemsPerPage)
+paginate(studentList, itemsPerPage) //call the function to paginate the web page
 
 
 /***
