@@ -23,7 +23,6 @@ const showPage = (list, page) => { //function to show the page we want
   }
 };
 
-showPage(studentList, 6) //call the function
 
 // add pagination links
 
@@ -54,9 +53,54 @@ const addPaginationLinks = (list) => {
        links[i].classList.remove('active')
       }
       event.target.classList.add('active')
+      showPage(studentList, event.target.innerText) //call the function
     });
   }
-
 };
 
+
+showPage(studentList, 1) //call the function
 addPaginationLinks(studentList) //call the function
+
+
+//For the Extra Credit
+
+// Add search component
+let headerDiv = document.getElementsByClassName('page-header')[0]; //get the div with the class of .page to add buttons to the bottom
+let searchBar = document.createElement('DIV')
+let searchBox = document.createElement('INPUT')
+let searchButton = document.createElement('BUTTON')
+headerDiv.appendChild(searchBar)
+searchBar.appendChild(searchBox)
+searchBar.appendChild(searchButton)
+searchBox.setAttribute("placeholder", "Search for an employee")
+searchButton.innerText = "Search"
+
+
+
+
+searchButton.addEventListener("click", function(){ //search when clicking button
+  let search = searchBox.value.toLowerCase();
+  let results =[]
+  for (i = 0; i < studentList.length; i++) {
+    studentList[i].style.display = 'none';
+    if (studentList[i].innerText.indexOf(search) !== -1) {
+      studentList[i].style.display = 'block';
+      results.push(studentList[i])
+    }
+  }
+  addPaginationLinks(results)
+});
+
+searchBox.addEventListener("keyup", function(){ //search on keyup
+  let search = searchBox.value.toLowerCase();
+  let results =[]
+  for (i = 0; i < studentList.length; i++) {
+    studentList[i].style.display = 'none';
+    if (studentList[i].innerText.indexOf(search) !== -1) {
+      studentList[i].style.display = 'block';
+      results.push(studentList[i])
+    }
+  }
+  addPaginationLinks(results)
+});
