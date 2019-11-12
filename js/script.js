@@ -43,9 +43,19 @@ const addPaginationLinks = (list) => {
     link.classList.add("active")
     li.appendChild(link)
     newUl.appendChild(li)
-    link.innerText = `${i+1}` //add numbers to buttons
+    link.innerText = `${i+1}` //add numbers to a tags
   }
 
+  let links = document.querySelectorAll('a')
+
+  for (i = 0; i < links.length; i++) {
+    links[i].addEventListener("click", function(){
+      for (i = 0; i < links.length; i++) {
+       links[i].classList.remove('active')
+      }
+      event.target.classList.add('active')
+    });
+  }
 
 };
 
