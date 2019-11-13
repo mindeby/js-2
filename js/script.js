@@ -27,6 +27,7 @@ const showPage = (list, page) => { //function to show the page we want
 // add pagination links
 
 const addPaginationLinks = (list) => {
+  removeElementsByClass('pagination') //remove old elements every time you start running the function
   let numberOfButtons = Math.ceil(list.length / itemsPerPage);
   let htmlDiv = document.getElementsByClassName('page')[0]; //get the div with the class of .page to add buttons to the bottom
   let newDiv = document.createElement('DIV');
@@ -98,9 +99,17 @@ searchBox.addEventListener("keyup", function(){ //search on keyup
   for (i = 0; i < studentList.length; i++) {
     studentList[i].style.display = 'none';
     if (studentList[i].innerText.indexOf(search) !== -1) {
-      studentList[i].style.display = 'block';
       results.push(studentList[i])
     }
   }
+  showPage(results, 1)
   addPaginationLinks(results)
 });
+
+
+function removeElementsByClass(className){ //function to remove the old pagination links
+  var elements = document.getElementsByClassName(className);
+  while(elements.length > 0){
+      elements[0].parentNode.removeChild(elements[0]);
+  }
+}
