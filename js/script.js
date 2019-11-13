@@ -40,10 +40,12 @@ const addPaginationLinks = (list) => {
     let li = document.createElement('LI');
     let link = document.createElement('A');
     link.setAttribute("href", "#");
-    link.classList.add("active")
     li.appendChild(link)
     newUl.appendChild(li)
     link.innerText = `${i+1}` //add numbers to a tags
+    if ( i == 0) {
+    link.classList.add("active")
+    }
   }
 
   let links = document.querySelectorAll('a')
@@ -64,6 +66,13 @@ showPage(studentList, 1) //call the function
 addPaginationLinks(studentList) //call the function
 
 
+function removeElementsByClass(className){ //function to remove the old pagination links when the functions are called
+  var elements = document.getElementsByClassName(className);
+  while(elements.length > 0){
+      elements[0].parentNode.removeChild(elements[0]);
+  }
+}
+
 //For the Extra Credit
 
 // Add search component
@@ -77,25 +86,10 @@ searchBar.appendChild(searchButton)
 searchBox.setAttribute("placeholder", "Search for an employee")
 searchButton.innerText = "Search"
 
-
-
-
-searchButton.addEventListener("click", function(){ //search when clicking button
+const findMatches = () => {
   let search = searchBox.value.toLowerCase();
   let results =[]
-  for (i = 0; i < studentList.length; i++) {
-    studentList[i].style.display = 'none';
-    if (studentList[i].innerText.indexOf(search) !== -1) {
-      studentList[i].style.display = 'block';
-      results.push(studentList[i])
-    }
-  }
-  addPaginationLinks(results)
-});
-
-searchBox.addEventListener("keyup", function(){ //search on keyup
-  let search = searchBox.value.toLowerCase();
-  let results =[]
+  removeElementsByClass('no_results') //remove old paragraphs
   for (i = 0; i < studentList.length; i++) {
     studentList[i].style.display = 'none';
     if (studentList[i].innerText.indexOf(search) !== -1) {
@@ -104,12 +98,23 @@ searchBox.addEventListener("keyup", function(){ //search on keyup
   }
   showPage(results, 1)
   addPaginationLinks(results)
-});
 
-
-function removeElementsByClass(className){ //function to remove the old pagination links
-  var elements = document.getElementsByClassName(className);
-  while(elements.length > 0){
-      elements[0].parentNode.removeChild(elements[0]);
+  if (results.length == 0) { //if there are no matches
+    removeElementsByClass('no_results') //remove old paragraphs
+    let parent = document.getElementsByClassName('page-header')[0]; //create a new paragraph for the message
+    let newP = document.createElement('P');
+    newP.classList.add("no_results")
+    parent.appendChild(newP)
+    newP.innerText = "No results found"
+    newP.style.marginTop = "50px";
   }
 }
+
+
+searchButton.addEventListener("click", function(){ //search when clicking button
+  findMatches();
+});
+
+searchBox.addEventListener("keyup", function(){ //search on keyup
+  findMatches();
+});
