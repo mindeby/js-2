@@ -12,11 +12,13 @@ let itemsPerPage = 10;
 
 
 //Just capitalizing the names of the students
+let studentNames = document.querySelectorAll('H3');
+
 for (i = 0; i < studentNames.length; i++) {
  studentNames[i].style.textTransform ="capitalize";
 }
 
-let studentNames = document.querySelectorAll('H3');
+
 //
 
 
@@ -129,7 +131,7 @@ const findMatches = () => { //function to find new matches on a certain event
 
   if (results.length == 0) { //if there are no matches
     removeElementsByClass('no_results') //remove old paragraphs  we created every time we run the function
-    let parent = document.getElementsByClassName('page-header')[0]; //get the parent div
+    let parent = document.getElementsByClassName('page')[0]; //get the parent div
     let newP = document.createElement('P'); //create a new paragraph for the message
     newP.classList.add("no_results")
     parent.appendChild(newP)
