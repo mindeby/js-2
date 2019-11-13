@@ -4,10 +4,16 @@ FSJS project 2 - List Filter and Pagination
 ******************************************/
 
 
-let studentList = document.querySelectorAll('li'); //each studen is an li in the index.html
+let studentNames = document.querySelectorAll('H3');
+
+let studentList = document.querySelectorAll('li'); //each student is an li in the index.html
 
 let itemsPerPage = 10;
 
+
+for (i = 0; i < studentNames.length; i++) {
+ studentNames[i].style.textTransform ="capitalize"; //Just capitalizing the names of the students
+}
 
 
 const showPage = (list, page) => { //function to show the page we want
@@ -43,9 +49,11 @@ const addPaginationLinks = (list) => {
     li.appendChild(link)
     newUl.appendChild(li)
     link.innerText = `${i+1}` //add numbers to a tags
+
     if ( i == 0) {
     link.classList.add("active")
     }
+
   }
 
   let links = document.querySelectorAll('a')
@@ -55,8 +63,10 @@ const addPaginationLinks = (list) => {
       for (i = 0; i < links.length; i++) {
        links[i].classList.remove('active')
       }
+
       event.target.classList.add('active')
       showPage(studentList, event.target.innerText) //call the function
+
     });
   }
 };
@@ -80,10 +90,16 @@ let headerDiv = document.getElementsByClassName('page-header')[0]; //get the div
 let searchBar = document.createElement('DIV')
 let searchBox = document.createElement('INPUT')
 let searchButton = document.createElement('BUTTON')
+searchBar.classList.add("student-search")
+stylingElements(searchButton)
+searchButton.style.backgroundColor="#4ba6c3"; //aditional button styling
+searchButton.style.color="#fff"; //aditional button styling
+stylingElements(searchBox)
+searchBox.style.marginRight="5px"; //aditional search box styling
 headerDiv.appendChild(searchBar)
 searchBar.appendChild(searchBox)
 searchBar.appendChild(searchButton)
-searchBox.setAttribute("placeholder", "Search for an employee")
+searchBox.setAttribute("placeholder", "Search for students...")
 searchButton.innerText = "Search"
 
 const findMatches = () => {
@@ -118,3 +134,11 @@ searchButton.addEventListener("click", function(){ //search when clicking button
 searchBox.addEventListener("keyup", function(){ //search on keyup
   findMatches();
 });
+
+
+function stylingElements(element){ //function to style the button and search bar
+  element.style.borderRadius="5px";
+  element.style.border="1px solid #eaeaea";
+  element.style.padding="8px 15px";
+  element.style.fontSize="14px";
+}
