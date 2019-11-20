@@ -4,11 +4,11 @@ FSJS project 2 - List Filter and Pagination
 ******************************************/
 
 // I created only two global variables for my functions
-let studentList = document.querySelectorAll('li'); // Each student is an li in the index.html
+const studentList = document.querySelectorAll('li'); // Each student is an li in the index.html
 let itemsPerPage = 10;
 
 // Capitalizing the names of the students
-let studentNames = document.querySelectorAll('H3');
+const studentNames = document.querySelectorAll('H3');
 for (i = 0; i < studentNames.length; i++) {
  studentNames[i].style.textTransform ="capitalize";
 }
@@ -53,7 +53,7 @@ const addPaginationLinks = (list) => {
        links[i].classList.remove('active') // Remove the active state for all the pagination links when any of them is clicked
       }
       event.target.classList.add('active') // But add it back to the selected pagination link
-      showPage(studentList, event.target.innerText) // Call the function taking the list items and setting the number of the page according to the text on the buttons
+      showPage(list, event.target.innerText) // Call the function taking the list items and setting the number of the page according to the text on the buttons
     });
   }
 };
@@ -71,10 +71,10 @@ function removeElementsByClass(className){
 }
 
 // For the Extra Credit - Add search component to webpage
-let headerDiv = document.getElementsByClassName('page-header')[0]; // Get the div with the class of .page to add child elements to (in this case the buttons for the pagination links)
-let searchBar = document.createElement('DIV') // Creating new elements to the page
-let searchBox = document.createElement('INPUT')
-let searchButton = document.createElement('BUTTON')
+const headerDiv = document.getElementsByClassName('page-header')[0]; // Get the div with the class of .page to add child elements to (in this case the buttons for the pagination links)
+const searchBar = document.createElement('DIV') // Creating new elements to the page
+const searchBox = document.createElement('INPUT')
+const searchButton = document.createElement('BUTTON')
 // Styling of the elements created
 searchBar.classList.add("student-search")
 stylingElements(searchButton)
